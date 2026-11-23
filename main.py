@@ -20,8 +20,9 @@ LABEL = (
 
 
 def main() -> None:
-    if not 1 <= len(LABEL) <= 160 or not LABEL.strip():
-        raise ValueError("label must be 1-160 non-blank characters")
+    # The entry must be a single line: a newline would break the gate.
+    if not 1 <= len(LABEL) <= 160 or not LABEL.strip() or "\n" in LABEL:
+        raise ValueError("label must be one line of 1-160 non-blank characters")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(LABEL)
